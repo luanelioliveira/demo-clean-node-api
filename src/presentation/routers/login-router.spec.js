@@ -46,4 +46,18 @@ describe('Login Router', () => {
 
     expect(httpResponse.statusCode).toBe(500)
   })
+
+  test('should return 200 if succesfully', () => {
+    const sut = new LoginRouter()
+    const httpRequest = {
+      body: {
+        email: 'any_email@mail.com',
+        password: 'any_password'
+      }
+    }
+
+    const httpResponse = sut.route(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
+  })
 })
