@@ -5,7 +5,18 @@
   "repository": "git@github.com:luanelioliveira/demo-clean-node-api.git",
   "author": "Luan Eli Oliveira <9741553+luanelioliveira@users.noreply.github.com>",
   "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.js": [
+      "standard --fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.8",
     "standard": "^16.0.4"
   }
 }
