@@ -5,6 +5,11 @@
   "repository": "git@github.com:luanelioliveira/demo-clean-node-api.git",
   "author": "Luan Eli Oliveira <9741553+luanelioliveira@users.noreply.github.com>",
   "license": "MIT",
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
   "scripts": {
     "prepare": "husky install",
     "test": "jest"
