@@ -2,12 +2,25 @@ const LoginRouter = require('./login-router')
 const MissingParamError = require('../helpers/missing-param-error')
 
 const makeSut = () => {
-  return new LoginRouter()
+  class AuthUsecaseSpy {
+    auth (email, password) {
+      this.email = email
+      this.password = password
+    }
+  }
+
+  const authUseCaseSpy = new AuthUsecaseSpy()
+  const sut = new LoginRouter(authUseCaseSpy)
+
+  return {
+    sut,
+    authUseCaseSpy
+  }
 }
 
 describe('Login Router', () => {
   test('should return 400 if no email is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         password: 'any_password'
@@ -21,7 +34,7 @@ describe('Login Router', () => {
   })
 
   test('should return 400 if no password is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         email: 'any_email@mail.com'
@@ -35,7 +48,7 @@ describe('Login Router', () => {
   })
 
   test('should return 500 if no httpRequest is provided', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
 
     const httpResponse = sut.route()
 
@@ -43,7 +56,7 @@ describe('Login Router', () => {
   })
 
   test('should return 500 if no httpRequest has no body', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {}
 
     const httpResponse = sut.route(httpRequest)
@@ -51,8 +64,23 @@ describe('Login Router', () => {
     expect(httpResponse.statusCode).toBe(500)
   })
 
+  test('should call AuthUsecase with correct params', () => {
+    const { sut, authUseCaseSpy } = makeSut()
+    const httpRequest = {
+      body: {
+        email: 'any_email@mail.com',
+        password: 'any_password'
+      }
+    }
+
+    sut.route(httpRequest)
+
+    expect(authUseCaseSpy.email).toBe(httpRequest.body.email)
+    expect(authUseCaseSpy.password).toBe(httpRequest.body.password)
+  })
+
   test('should return 200 if succesfully', () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         email: 'any_email@mail.com',
