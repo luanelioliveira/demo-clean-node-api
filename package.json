@@ -6,7 +6,8 @@
   "author": "Luan Eli Oliveira <9741553+luanelioliveira@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "jest"
   },
   "lint-staged": {
     "*.js": [
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "husky": "^7.0.4",
+    "jest": "^27.5.1",
     "lint-staged": "^12.3.8",
     "standard": "^16.0.4"
   }
