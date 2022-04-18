@@ -50,7 +50,7 @@ const makeAuthUseCaseWithError = () => {
 
 const makeEmailValidatorWithError = () => {
   class EmailValidatorSpy {
-    async auth () {
+    isValid () {
       throw new Error()
     }
   }
