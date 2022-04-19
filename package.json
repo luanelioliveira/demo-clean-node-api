@@ -16,7 +16,7 @@
     "test:verbose": "jest --silent --verbose",
     "test:watch": "jest --watchAll --silent --colors --noStackTrace",
     "test:staged": "jest --passWithNoTests --findRelatedTests --silent --noStackTrace",
-    "test:ci": "jest --coverage"
+    "test:ci": "jest --coverage --silent --noStackTrace"
   },
   "devDependencies": {
     "husky": "^7.0.4",
