@@ -5,7 +5,7 @@ class AuthUseCase {
       throw new MissingParamError('email')
     }
 
-    if (!email) {
+    if (!password) {
       throw new MissingParamError('password')
     }
   }
