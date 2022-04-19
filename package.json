@@ -13,11 +13,11 @@
   "scripts": {
     "postinstall": "husky install",
     "test": "jest",
-    "test:watch": "jest --watchAll",
-    "test:staged": "jest --passWithNoTests"
+    "test:verbose": "jest --silent --verbose",
+    "test:watch": "jest --watchAll --silent --colors --noStackTrace",
+    "test:staged": "jest --passWithNoTests --findRelatedTests --silent --noStackTrace"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.1",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.8",
