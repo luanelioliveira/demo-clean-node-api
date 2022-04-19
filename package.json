@@ -12,11 +12,10 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "test": "jest",
-    "test:verbose": "jest --silent --verbose",
-    "test:watch": "jest --watchAll --silent --colors --noStackTrace",
-    "test:staged": "jest --passWithNoTests --findRelatedTests --silent --noStackTrace",
-    "test:ci": "jest --coverage --silent --noStackTrace"
+    "test": "jest --silent --colors --noStackTrace --passWithNoTests",
+    "test:unit": "npm test -- --watch",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage"
   },
   "devDependencies": {
     "husky": "^7.0.4",
