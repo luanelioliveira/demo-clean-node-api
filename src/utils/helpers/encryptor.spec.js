@@ -23,4 +23,13 @@ describe('Encrypter', () => {
 
     expect(isValid).toBe(false)
   })
+
+  test('should call bcrypt with correct valeus', async () => {
+    const sut = new Encrypter()
+
+    await sut.compare('any_data', 'any_hash')
+
+    expect(bcrypt.data).toBe('any_data')
+    expect(bcrypt.hash).toBe('any_hash')
+  })
 })
