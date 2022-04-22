@@ -7,6 +7,10 @@ class TokenGenerator {
   }
 
   async generate (data) {
+    if (!this.secret) {
+      throw new MissingParamError('secret')
+    }
+
     if (!data) {
       throw new MissingParamError('data')
     }
@@ -53,5 +57,11 @@ describe('Token Generator', () => {
     const { sut } = makeSut()
 
     expect(sut.generate()).rejects.toThrow(new MissingParamError('data'))
+  })
+
+  test('should throw if no data are provided', async () => {
+    const sut = new TokenGenerator()
+
+    expect(sut.generate('any_data')).rejects.toThrow(new MissingParamError('secret'))
   })
 })
