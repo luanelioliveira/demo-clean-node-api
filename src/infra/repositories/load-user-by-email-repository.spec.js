@@ -28,7 +28,7 @@ describe('LoadUserByEmail Repository', () => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
-    db = await connection.db()
+    db = connection.db()
   })
 
   beforeEach(async () => {
