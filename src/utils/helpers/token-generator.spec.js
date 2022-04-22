@@ -1,13 +1,17 @@
 const jwt = require('jsonwebtoken')
 
 class TokenGenerator {
+  constructor (secret) {
+    this.secret = secret
+  }
+
   async generate (data) {
-    return jwt.sign(data, 'secret')
+    return jwt.sign(data, this.secret)
   }
 }
 
 const makeSut = () => {
-  const sut = new TokenGenerator()
+  const sut = new TokenGenerator('any_secret')
   return {
     sut
   }
@@ -29,5 +33,14 @@ describe('Token Generator', () => {
     const token = await sut.generate('any_data')
 
     expect(token).toBe(jwt.token)
+  })
+
+  test('should call JWT with correct values', async () => {
+    const { sut } = makeSut()
+
+    await sut.generate('any_data')
+
+    expect(jwt.data).toBe('any_data')
+    expect(jwt.secret).toBe('any_secret')
   })
 })
