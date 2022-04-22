@@ -49,6 +49,7 @@ describe('LoadUserByEmail Repository', () => {
 
   test('should return an user if user is found', async () => {
     const { sut, users } = makeSut()
+
     const mockUser = { email: 'valid_email@mail.com' }
     await users.insertOne(mockUser)
 
