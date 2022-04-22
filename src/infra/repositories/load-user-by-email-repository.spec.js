@@ -1,17 +1,7 @@
 const { MongoClient } = require('mongodb')
+const LoadUserByUserRepository = require('./load-user-by-email-repository')
 
 let connection, db
-
-class LoadUserByUserRepository {
-  constructor (users) {
-    this.users = users
-  }
-
-  async load (email) {
-    const user = await this.users.findOne({ email }, { projection: { password: 1 } })
-    return user
-  }
-}
 
 const makeSut = () => {
   const users = db.collection('users')
@@ -31,12 +21,12 @@ describe('LoadUserByEmail Repository', () => {
     db = connection.db()
   })
 
-  beforeEach(async () => {
-    await db.collection('users').deleteMany({})
-  })
-
   afterAll(async () => {
     await connection.close()
+  })
+
+  beforeEach(async () => {
+    await db.collection('users').deleteMany({})
   })
 
   test('should return null if no user is found', async () => {
