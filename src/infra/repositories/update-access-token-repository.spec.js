@@ -12,6 +12,15 @@ class UpdateAccessTokenRepository {
   }
 }
 
+const makeSut = () => {
+  const users = db.collection('users')
+  const sut = new UpdateAccessTokenRepository(users)
+  return {
+    users,
+    sut
+  }
+}
+
 describe('UpdateAccessToken Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -27,14 +36,13 @@ describe('UpdateAccessToken Repository', () => {
   })
 
   test('should update the user with the accessToken', async () => {
-    const users = db.collection('users')
+    const { sut, users } = makeSut()
     const fakeUser = {
       _id: 'valid_id',
       email: 'valid_email@mail.com',
       password: 'hashed_password'
     }
     await users.insertOne(fakeUser)
-    const sut = new UpdateAccessTokenRepository(users)
 
     await sut.update('valid_id', 'valid_token')
 
