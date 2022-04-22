@@ -13,6 +13,16 @@ const makeSut = () => {
   }
 }
 
+const makeFakeUser = () => {
+  const fakeUser = {
+    _id: 'valid_id',
+    email: 'valid_email@mail.com',
+    password: 'hashed_password'
+  }
+
+  return fakeUser
+}
+
 describe('UpdateAccessToken Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -24,17 +34,15 @@ describe('UpdateAccessToken Repository', () => {
   })
 
   beforeEach(async () => {
-    await db.collection('users').deleteMany({})
+    const { users } = makeSut()
+    await users.deleteMany({})
+
+    const fakeUser = makeFakeUser()
+    await users.insertOne(fakeUser)
   })
 
   test('should update the user with the accessToken', async () => {
     const { sut, users } = makeSut()
-    const fakeUser = {
-      _id: 'valid_id',
-      email: 'valid_email@mail.com',
-      password: 'hashed_password'
-    }
-    await users.insertOne(fakeUser)
 
     await sut.update('valid_id', 'valid_token')
 
