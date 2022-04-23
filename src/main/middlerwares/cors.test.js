@@ -1,8 +1,8 @@
 const request = require('supertest')
-const app = require('./app')
+const app = require('../config/app')
 
-describe('Setup App', () => {
-  test('should enable cors', async () => {
+describe('CORS Middleware', () => {
+  test('should enable CORS', async () => {
     app.get('/test_cors', (req, res) => { res.send('') })
 
     const res = await request(app).get('/test_cors')
