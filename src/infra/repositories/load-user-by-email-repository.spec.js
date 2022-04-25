@@ -1,7 +1,8 @@
 const MongoHelper = require('../helpers/mongo-helper')
 const LoadUserByUserRepository = require('./load-user-by-email-repository')
 const MissingParamError = require('../../utils/errors/missing-param-error')
-let db
+
+let userModel
 
 const makeSut = () => {
   const sut = new LoadUserByUserRepository()
@@ -13,7 +14,7 @@ const makeSut = () => {
 describe('LoadUserByEmail Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
-    db = await MongoHelper.getDatabase()
+    userModel = await MongoHelper.getCollection('users')
   })
 
   afterAll(async () => {
@@ -21,7 +22,7 @@ describe('LoadUserByEmail Repository', () => {
   })
 
   beforeEach(async () => {
-    await db.collection('users').deleteMany({})
+    await userModel.deleteMany({})
   })
 
   test('should return null if no user is found', async () => {
@@ -39,7 +40,7 @@ describe('LoadUserByEmail Repository', () => {
       email: 'valid_email@mail.com',
       password: 'hashed_password'
     }
-    await db.collection('users').insertOne(fakeUser)
+    await userModel.insertOne(fakeUser)
 
     const user = await sut.load('valid_email@mail.com')
 
