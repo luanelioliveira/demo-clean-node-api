@@ -12,12 +12,11 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --colors --noStackTrace --passWithNoTests",
+    "test": "jest --colors --noStackTrace --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests --silent",
     "test:ci": "npm test -- --coverage --silent",
-    "test:full": "jest",
     "start": "node src/main/index.js"
   },
   "devDependencies": {
