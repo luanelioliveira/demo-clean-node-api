@@ -1,5 +1,5 @@
+const loginRouter = require('../composers/login-router-composer')
+
 module.exports = router => {
-  router.get('/login', (req, res) => {
-    res.send({ status: 'OK' })
-  })
+  router.post('/login', loginRouter)
 }
