@@ -44,4 +44,11 @@ describe('Login Routes', () => {
       })
       .expect(401)
   })
+
+  test('should return 400 when no params are provided', async () => {
+    await request(app)
+      .post('/api/login')
+      .send({})
+      .expect(400)
+  })
 })
