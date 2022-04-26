@@ -1,5 +1,4 @@
 const LoginRouter = require('./login-router')
-const { MissingParamError, InvalidParamError } = require('../../utils/errors')
 const { UnauthorizedError, ServerError } = require('../errors')
 
 const makeSut = () => {
@@ -71,7 +70,7 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('email'))
+    expect(httpResponse.body).toEqual({ error: 'Missing param: email' })
   })
 
   test('should return 400 if no password is provided', async () => {
@@ -85,7 +84,7 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('password'))
+    expect(httpResponse.body).toEqual({ error: 'Missing param: password' })
   })
 
   test('should return 500 if no httpRequest is provided', async () => {
@@ -94,7 +93,7 @@ describe('Login Router', () => {
     const httpResponse = await sut.route()
 
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual({ error: new ServerError().message })
   })
 
   test('should return 500 if no httpRequest has no body', async () => {
@@ -104,7 +103,7 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
 
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual({ error: new ServerError().message })
   })
 
   test('should call AuthUsecase with correct params', async () => {
@@ -135,7 +134,7 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
 
     expect(httpResponse.statusCode).toBe(401)
-    expect(httpResponse.body).toEqual(new UnauthorizedError())
+    expect(httpResponse.body).toEqual({ error: new UnauthorizedError().message })
   })
 
   test('should return 200 when valid credentials are provided', async () => {
@@ -166,7 +165,7 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new InvalidParamError('email'))
+    expect(httpResponse.body).toEqual({ error: 'Invalid param: email' })
   })
 
   test('should call AuthUsecase with correct params', async () => {
@@ -205,7 +204,7 @@ describe('Login Router', () => {
       const httpResponse = await sut.route(httpRequest)
 
       expect(httpResponse.statusCode).toBe(500)
-      expect(httpResponse.body).toEqual(new ServerError())
+      expect(httpResponse.body).toEqual({ error: new ServerError().message })
     }
   })
 
@@ -234,7 +233,7 @@ describe('Login Router', () => {
       const httpResponse = await sut.route(httpRequest)
 
       expect(httpResponse.statusCode).toBe(500)
-      expect(httpResponse.body).toEqual(new ServerError())
+      expect(httpResponse.body).toEqual({ error: new ServerError().message })
     }
   })
 })
