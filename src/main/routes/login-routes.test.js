@@ -51,4 +51,22 @@ describe('Login Routes', () => {
       .send({})
       .expect(400)
   })
+
+  test('should return 400 when no password is provided', async () => {
+    await request(app)
+      .post('/api/login')
+      .send({
+        email: 'any_email@mail.com'
+      })
+      .expect(400)
+  })
+
+  test('should return 400 when no email is provided', async () => {
+    await request(app)
+      .post('/api/login')
+      .send({
+        password: 'any_password'
+      })
+      .expect(400)
+  })
 })
